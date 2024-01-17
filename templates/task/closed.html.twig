@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tâches clôturées!{% endblock %}
+
+{% block body %}
+    <section class="container text-primary">
+        {% if tasks.data is defined %}
+            <h1 class="my-5 text-center">Voici l'ensemble de vos tâches clôturées : </h1>
+            {% for task in tasks.data %}
+                <div class="row border border-primary rounded-2 shadow my-3">
+                    <p class="fw-bold">{{ task.title ~ task.id }} <span class="fst-italic fw-normal">{{ task.author.username == 'anonymous' ? 'Personne assignée à cette tâche' : '' }} créée le {{ task.createdAt|date("d/m/Y \\à H\\hi", 'Europe/Paris') }}</span></p>
+                    <p>{{ task.content }}</p>
+                    <a href="{{ path('task_toggle', {id : task.id}) }}" class="btn btn-success w-25 my-3 mx-auto">{{ task.isDone == false ? 'Clôturer la tâche' : 'Tâche à réaliser'}}</a>
+                </div>
+            {% endfor %}
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col-6 offset-3">
+                        {% set path_url = "task_closed" %}
+                        {% include ('layouts/_pagination.html.twig') %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>Vous n'avez aucune tâche. Créez-en une en cliquant <a href="{{ path('task_create') }}">ici.</a></p>
+        {% endif %}
+
+        <a href="{{ path('task_list') }}" class="my-3 mx-auto w-100 btn btn-primary">Voir mes tâches en cours</a>
+    </section>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% if tasks.pages > 1 %}
+    <ul class="pagination">
+        {% if tasks.page > 1 %}
+        <li class="page-item m-auto w-100 mt-3">
+            <a href="{{ path(path_url, {page : 1}) }}" class="btn btn-secondary {{ tasks.page > 1 ? '' : 'disabled' }}">&lt</a>
+        </li>
+            <li class="page-item m-auto w-100 mt-3">
+                <a href="{{ path(path_url, {page : tasks.page - 1}) }}" class="btn btn-secondary">Préc.</a>
+            </li>
+        {% endif %}
+        <li class="page-item m-auto w-100 mt-3">
+            <a href="" class="btn btn-secondary disabled">{{ tasks.page }}</a>
+        </li>
+        {% if tasks.page < tasks.pages %}
+            <li class="page-item m-auto w-100 mt-3">
+                <a href="{{ path(path_url, {page : tasks.page + 1}) }}" class="btn btn-secondary">Suiv.</a>
+            </li>
+        <li class="page-item m-auto w-100 mt-3">
+            <a href="{{ path(path_url, {page : tasks.pages}) }}" class="btn btn-secondary {{ tasks.page < tasks.pages ? '' : 'disabled' }}">&gt</a>
+        </li>
+        {% endif %}
+    </ul>
+{% endif %}
