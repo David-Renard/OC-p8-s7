@@ -173,12 +173,12 @@ class UserFixtures extends Fixture
             $manager->persist($user);
         }
 
-        $anonymous = new User();
-        $anonymous->setUsername('anonymous');
-        $anonymous->setEmail('nomail@fake.com');
-        $anonymous->setPassword($this->passwordHasher->hashPassword($anonymous, 'password'));
-        $this->addReference("anonymous", $anonymous);
-        $manager->persist($anonymous);
+//        $anonymous = new User();
+//        $anonymous->setUsername('anonymous');
+//        $anonymous->setEmail('nomail@fake.com');
+//        $anonymous->setPassword($this->passwordHasher->hashPassword($anonymous, 'password'));
+//        $this->addReference("anonymous", $anonymous);
+//        $manager->persist($anonymous);
 
         $manager->flush();
     }

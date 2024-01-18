@@ -26,18 +26,16 @@ class TaskRepository extends ServiceEntityRepository
         parent::__construct($registry, Task::class);
     }
 
-    public function findAllTasks(int $page, bool $isDone, string $anonymous, string $username): array
+    public function findTasks(int $page, bool $isDone, int $id): array
     {
         $tasks = [];
         if ($page < 1) $page = 1;
 
         $query = $this->createQueryBuilder('t')
-            ->join('t.author', 'u')
-            ->andWhere("u.username = :anonymous or u.username = :username")
             ->andWhere("t.isDone = :status")
+            ->andWhere("t.author = :id_author")
             ->setParameter('status', $isDone)
-            ->setParameter('username', $username)
-            ->setParameter('anonymous', $anonymous)
+            ->setParameter('id_author', $id)
             ->orderBy('t.createdAt', 'DESC')
             ->setFirstResult(($page - 1) * self::LIMIT)
             ->setMaxResults(self::LIMIT)

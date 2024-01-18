@@ -98,12 +98,12 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
             $task->setCreatedAt($now->sub(new \DateInterval("P{$randomDuration}D")));
 
             $author = $this->getReference("user-".rand(0,27));
+            $task->setAuthor($author);
 
             if ($randomDuration > 30) {
-                $author = $this->getReference("anonymous");
+                $task->setAuthor(null);
             }
 
-            $task->setAuthor($author);
             $manager->persist($task);
         }
 

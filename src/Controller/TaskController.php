@@ -26,19 +26,19 @@ class TaskController extends AbstractController
     {
         $tasks = $this->getOtherStatusTasks($page, false);
 
-        if ($tasks === []) return $this->redirectToRoute('app_login');
+        if ($tasks === null) return $this->redirectToRoute('app_login');
 
         return $this->render('task/opened.html.twig', [
             'tasks' => $tasks,
         ]);
     }
 
-    #[Route('/{page}/closed', name: 'closed', requirements: ['page' => '\d+'])]
+    #[Route('/closed/{page}', name: 'closed', requirements: ['page' => '\d+'])]
     public function listCheckedTask(?int $page = 1): Response
     {
         $tasks = $this->getOtherStatusTasks($page, true);
 
-        if ($tasks === []) return $this->redirectToRoute('app_login');
+        if ($tasks === null) return $this->redirectToRoute('app_login');
 
         return $this->render('task/closed.html.twig', [
             'tasks' => $tasks,
@@ -118,21 +118,12 @@ class TaskController extends AbstractController
         return $this->redirectToRoute('task_list');
     }
 
-    private function getOtherStatusTasks(int $page, bool $isDone): array
+    private function getOtherStatusTasks(int $page, bool $isDone): array|null
     {
-        $tasks = [];
         $author = $this->getUser();
 
-        if ($author === null) return $tasks;
+        if ($author === null) return null;
 
-        if (!in_array('ROLE_ADMIN', $author->getRoles()))
-        {
-            $tasks = $this->taskRepository->findAllTasks($page, $isDone, '', $author->getUsername());
-        }
-        else {
-            $tasks = $this->taskRepository->findAllTasks($page, $isDone, 'anonymous', $author->getUsername());
-        }
-
-        return $tasks;
+        return $this->taskRepository->findTasks($page, $isDone, $author->getId());
     }
 }
