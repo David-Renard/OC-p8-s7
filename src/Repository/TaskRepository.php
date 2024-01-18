@@ -60,6 +60,18 @@ class TaskRepository extends ServiceEntityRepository
         return $tasks;
     }
 
+    public function findAnonymousTasks(bool $isDone): array
+    {
+        $query = $this->createQueryBuilder('t')
+            ->andWhere("t.isDone = :status")
+            ->andWhere("t.author IS NULL")
+            ->setParameter('status', $isDone)
+            ->getQuery()
+        ;
+
+        return $query->getResult();
+    }
+
 //    public function findOneBySomeField($value): ?Task
 //    {
 //        return $this->createQueryBuilder('t')

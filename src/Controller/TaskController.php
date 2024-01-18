@@ -24,7 +24,7 @@ class TaskController extends AbstractController
     #[Route('/{page}', name: 'list', requirements: ['page' => '\d+'])]
     public function listUncheckedTask(?int $page = 1): Response
     {
-        $tasks = $this->getOtherStatusTasks($page, false);
+        $tasks = $this->getTasksByState($page, false);
 
         if ($tasks === null) return $this->redirectToRoute('app_login');
 
@@ -36,7 +36,7 @@ class TaskController extends AbstractController
     #[Route('/closed/{page}', name: 'closed', requirements: ['page' => '\d+'])]
     public function listCheckedTask(?int $page = 1): Response
     {
-        $tasks = $this->getOtherStatusTasks($page, true);
+        $tasks = $this->getTasksByState($page, true);
 
         if ($tasks === null) return $this->redirectToRoute('app_login');
 
@@ -118,7 +118,7 @@ class TaskController extends AbstractController
         return $this->redirectToRoute('task_list');
     }
 
-    private function getOtherStatusTasks(int $page, bool $isDone): array|null
+    private function getTasksByState(int $page, bool $isDone): array|null
     {
         $author = $this->getUser();
 
