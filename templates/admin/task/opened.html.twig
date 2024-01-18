@@ -1,0 +1,40 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Tâches anonymes{% endblock %}
+
+{% block header_img %}<img class="slide-image" src="{{ asset('img/todolist_content.jpg') }}" alt="todo list">{% endblock %}
+
+{% block body %}
+    <section class="container text-primary">
+        {% if tasks is defined %}
+            <h1 class="my-5 text-center">Voici l'ensemble des tâches anonymes : </h1>
+            {% for task in tasks %}
+                <div class="row border border-light shadow mb-3 rounded-2">
+                    <div class="col-10 offset-1">
+                        <div class="thumbnail">
+                            <div class="caption">
+                                <h4 class="pull-right">
+                                    {% if task.isDone %}<span class="glyphicon glyphicon-ok"></span>{% else %}<span class="glyphicon glyphicon-remove"></span>{% endif %}
+                                </h4>
+                                <h4>{{ task.title }}</h4>
+                                <p class="fst-italic fw-normal h6">le {{ task.createdAt|date("d/m/Y \\à H\\hi", 'Europe/Paris') }}</p>
+                                <p>{{ task.content }}</p>
+                            </div>
+                            <div class="w-50 mx-auto mb-4 text-center">
+                                <form action="{{ path('admin_task_delete', {'id' : task.id }) }}">
+                                    <button class="btn btn-danger btn-sm pull-right">Supprimer</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                Vous n'avez aucune tâche terminée!
+            </div>
+        {% endif %}
+
+        <a href="{{ path('task_list') }}" class="my-3 mx-auto w-100 btn btn-primary">Voir mes tâches ouvertes.</a>
+    </section>
+{% endblock %}
