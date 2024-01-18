@@ -21,6 +21,8 @@ class TaskType extends AbstractType
                 TextType::class,
                 [
                     'label' => 'Titre',
+                    'attr'  => ['class' => 'form-control border border-primary-subtle'],
+                    'label_attr' => ['class' => 'mb-2'],
                 ]
             )
             ->add(
@@ -28,7 +30,13 @@ class TaskType extends AbstractType
                 TextareaType::class,
                 [
                     'label'    => 'Description',
+                    'attr'     =>
+                        [
+                            'class' => 'form-control border border-primary-subtle',
+                            'rows'   => 4,
+                        ],
                     'required' => false,
+                    'label_attr' => ['class' => 'mb-2'],
                 ]
             )
         ;

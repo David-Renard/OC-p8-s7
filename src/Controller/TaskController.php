@@ -10,7 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[Route('/task', name:'task_')]
 class TaskController extends AbstractController
 {
 
@@ -19,7 +21,7 @@ class TaskController extends AbstractController
     {
     }
 
-    #[Route('/{page}', name: 'task_list', requirements: ['page' => '\d+'])]
+    #[Route('/{page}', name: 'list', requirements: ['page' => '\d+'])]
     public function listUncheckedTask(?int $page = 1): Response
     {
         $tasks = $this->getOtherStatusTasks($page, false);
@@ -31,7 +33,7 @@ class TaskController extends AbstractController
         ]);
     }
 
-    #[Route('/{page}/closed', name: 'task_closed', requirements: ['page' => '\d+'])]
+    #[Route('/{page}/closed', name: 'closed', requirements: ['page' => '\d+'])]
     public function listCheckedTask(?int $page = 1): Response
     {
         $tasks = $this->getOtherStatusTasks($page, true);
@@ -43,7 +45,8 @@ class TaskController extends AbstractController
         ]);
     }
 
-    #[Route('/create', name: 'task_create')]
+    #[Route('/create', name: 'create')]
+    #[IsGranted('ROLE_USER')]
     public function createTask(Request $request): Response
     {
         $task = new Task();
@@ -68,7 +71,7 @@ class TaskController extends AbstractController
         ]);
     }
 
-    #[Route('/update/{id}', name: 'task_update', requirements: ['id' => '\d+'])]
+    #[Route('/update/{id}', name: 'edit', requirements: ['id' => '\d+'])]
     public function updateTask(Task $task, Request $request): Response
     {
         $this->denyAccessUnlessGranted('TASK_EDIT', $task);
@@ -86,13 +89,13 @@ class TaskController extends AbstractController
             return $this->redirectToRoute('task_list');
         }
 
-        return $this->render('task/create.html.twig', [
+        return $this->render('task/edit.html.twig', [
             'task' => $task,
             'form' => $form,
         ]);
     }
 
-    #[Route('/delete/{id}', name: 'task_delete', requirements: ['id' => '\d+'])]
+    #[Route('/delete/{id}', name: 'delete', requirements: ['id' => '\d+'])]
     public function deleteTask(Task $task): Response
     {
         $this->denyAccessUnlessGranted('TASK_DELETE', $task);
@@ -104,7 +107,7 @@ class TaskController extends AbstractController
         return $this->redirectToRoute('task_list');
     }
 
-    #[Route('/{id}/toggle', name: 'task_toggle', requirements: ['id' => '\d+'])]
+    #[Route('/{id}/toggle', name: 'toggle', requirements: ['id' => '\d+'])]
     public function toggleTask(Task $task): Response
     {
         $task->isIsDone() ? $task->setIsDone(false) : $task->setIsDone(true);
