@@ -1,12 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block header_title %}<h1>Créer un utilisateur</h1>{% endblock %}
-{% block header_img %}{% endblock %}
+{% block title %}S'inscrire{% endblock %}
 
 {% block body %}
-    <div class="row">
-        {{ form_start(form, {'action' : path('user_create')}) }}
-        {{ form_widget(form) }}
+    <div class="container text-center">
+        {{ form_errors(form) }}
+        {{ form_start(form) }}
+        <div class="my-3 col-8 offset-2">
+            {{ form_row(form.username) }}
+        </div>
+        <div class="my-3 col-8 offset-2">
+            {{ form_row(form.email) }}
+        </div>
+        <div class="my-3 col-10 offset-1 d-flex flex-column justify-content-around">
+            {{ form_row(form.roles) }}
+        </div>
+        <div class="my-3 col-10 offset-1 d-flex justify-content-around">
+            {{ form_row(form.plainPassword.first) }}
+        </div>
+        <div class="my-3 col-10 offset-1 d-flex justify-content-around">
+            {{ form_row(form.plainPassword.second) }}
+        </div>
+        <div class="my-3 col-10 offset-1 d-flex justify-content-around">
+            {{ form_row(form.agreeTerms) }}
+        </div>
 
         <button type="submit" class="btn btn-success pull-right">Ajouter</button>
         {{ form_end(form) }}

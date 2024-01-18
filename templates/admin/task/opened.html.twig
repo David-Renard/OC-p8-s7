@@ -31,10 +31,8 @@
             {% endfor %}
         {% else %}
             <div class="alert alert-warning" role="alert">
-                Vous n'avez aucune tâche terminée!
+                Il n'y a pas de tâches anonymes ouvertes!
             </div>
         {% endif %}
-
-        <a href="{{ path('task_list') }}" class="my-3 mx-auto w-100 btn btn-primary">Voir mes tâches ouvertes.</a>
     </section>
 {% endblock %}
