@@ -27,9 +27,7 @@ class UserController extends AbstractController
     #[Route('/', name: 'list')]
     public function listAction(): Response
     {
-        return $this->render('user/index.html.twig', [
-            'users' => $this->userRepository->findAll(),
-        ]);
+        return $this->render('user/index.html.twig', ['users' => $this->userRepository->findAll(),]);
     }
 
     #[Route('/create', name: 'create')]
@@ -57,10 +55,18 @@ class UserController extends AbstractController
         return $this->render('user/create.html.twig', ['form' => $form->createView(),]);
     }
 
+    /**
+     * The logged user can change whatever he wants on hiw own profile only
+     * @param User $user
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/edit/{id}', name: 'edit', requirements: ['id' => '\d+'])]
     public function editProfileAction(User $user, Request $request): Response
     {
-        if (!$this->getUser()) return $this->redirectToRoute('homepage');
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('homepage');
+        }
 
         $this->denyAccessUnlessGranted('USER_EDIT', $user);
 
@@ -80,10 +86,13 @@ class UserController extends AbstractController
             return $this->redirectToRoute("task_list");
         }
 
-        return $this->render('user/edit.html.twig', [
-            'form' => $form->createView(),
-            'user' => $user,
-        ]);
+        return $this->render(
+            'user/edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'user' => $user,
+            ]
+        );
 
     }
 

@@ -1,10 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_admin.html.twig' %}
 
-{% block title %}Modifier une tâche{% endblock %}
+{% block title %}Modifier une tâche anonyme{% endblock %}
 
 {% block body %}
     <div class="container text-center">
-        <h1 class="h5">Modifier cette tâche : </h1>
+        <h1 class="h5">Modifier cette tâche anonyme : </h1>
         {{ form_errors(form) }}
         {{ form_start(form) }}
         <div class="my-3 col-8 offset-2">
@@ -17,7 +17,7 @@
             <button type="submit" class="btn btn-primary">Modifier</button>
         </div>
         {{ form_end(form) }}
-        <a href="{{ path('task_list') }}" class="btn btn-secondary">Retour à la liste de mes tâches</a>
+        <a href="{{ path('task_list') }}" class="btn btn-secondary">Retour à la liste des tâches anonymes</a>
     </div>
 
 {% endblock %}
