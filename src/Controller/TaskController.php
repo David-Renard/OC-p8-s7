@@ -21,6 +21,12 @@ class TaskController extends AbstractController
     {
     }
 
+
+    /**
+     * allow a user to see all his opened tasks
+     * @param int|null $page
+     * @return Response
+     */
     #[Route('/{page}', name: 'list', requirements: ['page' => '\d+'])]
     public function listUncheckedTask(?int $page = 1): Response
     {
@@ -28,11 +34,16 @@ class TaskController extends AbstractController
 
         if ($tasks === null) return $this->redirectToRoute('app_login');
 
-        return $this->render('task/opened.html.twig', [
-            'tasks' => $tasks,
-        ]);
+        return $this->render('task/opened.html.twig', ['tasks' => $tasks,]);
+
     }
 
+
+    /**
+     * allow a user to see all his closed tasks
+     * @param int|null $page
+     * @return Response
+     */
     #[Route('/closed/{page}', name: 'closed', requirements: ['page' => '\d+'])]
     public function listCheckedTask(?int $page = 1): Response
     {
@@ -40,9 +51,8 @@ class TaskController extends AbstractController
 
         if ($tasks === null) return $this->redirectToRoute('app_login');
 
-        return $this->render('task/closed.html.twig', [
-            'tasks' => $tasks,
-        ]);
+        return $this->render('task/closed.html.twig', ['tasks' => $tasks,]);
+
     }
 
     #[Route('/create', name: 'create')]
@@ -65,10 +75,14 @@ class TaskController extends AbstractController
             return $this->redirectToRoute('task_list');
         }
 
-        return $this->render('task/create.html.twig', [
-            'task' => $task,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+                                'task/create.html.twig',
+                                [
+                                    'task' => $task,
+                                    'form' => $form->createView(),
+                                ]
+                            );
+
     }
 
     #[Route('/update/{id}', name: 'edit', requirements: ['id' => '\d+'])]
@@ -89,10 +103,14 @@ class TaskController extends AbstractController
             return $this->redirectToRoute('task_list');
         }
 
-        return $this->render('task/edit.html.twig', [
-            'task' => $task,
-            'form' => $form,
-        ]);
+        return $this->render(
+                        'task/edit.html.twig',
+                                [
+                                    'task' => $task,
+                                    'form' => $form,
+                                ]
+                            );
+
     }
 
     #[Route('/delete/{id}', name: 'delete', requirements: ['id' => '\d+'])]
@@ -105,6 +123,7 @@ class TaskController extends AbstractController
         $this->addFlash("success", "La tâche a bien été supprimée.");
 
         return $this->redirectToRoute('task_list');
+
     }
 
     #[Route('/{id}/toggle', name: 'toggle', requirements: ['id' => '\d+'])]
@@ -116,6 +135,7 @@ class TaskController extends AbstractController
         $task->isIsDone() ? $this->addFlash("success", sprintf("La tâche '%s' est désormais terminée.", $task->getTitle())) : $this->addFlash("success", sprintf("La tâche '%s' est désormais ouverte.", $task->getTitle()));
 
         return $this->redirectToRoute('task_list');
+
     }
 
     private function getTasksByState(int $page, bool $isDone): array|null
@@ -125,5 +145,6 @@ class TaskController extends AbstractController
         if ($author === null) return null;
 
         return $this->taskRepository->findTasks($page, $isDone, $author->getId());
+
     }
 }

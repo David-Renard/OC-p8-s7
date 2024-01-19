@@ -26,8 +26,14 @@ class TaskAdminController extends AbstractController
         $tasks = $this->taskRepository->findAnonymousTasks(false);
 
         return $this->render('admin/task/opened.html.twig', ['tasks' => $tasks]);
+
     }
 
+    /**
+     * allow an admin to delete an anonymous task
+     * @param Task $task
+     * @return Response
+     */
     #[Route('/delete/{id}', name: 'delete', requirements: ['id' => '\d+'])]
     public function deleteAnonymousTasksAction(Task $task): Response
     {
@@ -37,8 +43,15 @@ class TaskAdminController extends AbstractController
         $this->addFlash("success", "Cette tâche a bien été supprimée.");
 
         return $this->redirectToRoute('admin_task_list');
+
     }
 
+    /**
+     * allow an admin to edit an anonymous task
+     * @param Request $request
+     * @param Task $task
+     * @return Response
+     */
     #[Route('/edit/{id}', name: 'edit', requirements: ['id' => '\d+'])]
     public function editAnonymousTasksAction(Request $request, Task $task): Response
     {
@@ -57,9 +70,13 @@ class TaskAdminController extends AbstractController
             return $this->redirectToRoute('admin_task_list');
         }
 
-        return $this->render('admin/task/edit.html.twig', [
-            'task' => $task,
-            'form' => $form,
-        ]);
+        return $this->render(
+                                'admin/task/edit.html.twig',
+                                [
+                                    'task' => $task,
+                                    'form' => $form,
+                                ]
+                            );
+
     }
 }

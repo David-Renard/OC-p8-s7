@@ -108,10 +108,12 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
         }
 
         $manager->flush();
+
     }
 
     public function getDependencies(): array
     {
         return [UserFixtures::class];
+
     }
 }
