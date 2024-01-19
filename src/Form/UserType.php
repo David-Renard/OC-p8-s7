@@ -24,7 +24,7 @@ class UserType extends AbstractType
                 EmailType::class,
                 [
                     'label' => 'Adresse email',
-                    'attr'  => ['class' => 'form-control border border-primary-subtle'],
+                    'attr'  => ['class' => 'form-control'],
                 ]
             )
             ->add(
@@ -36,6 +36,7 @@ class UserType extends AbstractType
                         'ROLE_USER'  => 'ROLE_USER',
                         'ROLE_ADMIN' => 'ROLE_ADMIN',
                     ],
+                    'attr'  => ['class' => 'd-flex flex-column form-control'],
                     'multiple' => true,
                     'expanded' => true,
                 ]
@@ -46,8 +47,15 @@ class UserType extends AbstractType
                 [
                     'type'            => PasswordType::class,
                     'attr'            => ['autocomplete' => 'new-password',],
-                    'first_options'   => ['label' => 'Mot de passe',],
-                    'second_options'  => ['label' => 'Tapez à nouveau le mot de passe',],
+                    'first_options'   => [
+                        'label' => 'Mot de passe',
+                        'attr'  => ['class' => 'form-control'],
+                        ],
+                    'second_options'  =>
+                        [
+                            'label' => 'Tapez à nouveau le mot de passe',
+                            'attr'  => ['class' => 'form-control'],
+                        ],
                     'invalid_message' => "La confirmation du mot de passe ne correspond pas.",
                 ]
             )
@@ -56,7 +64,7 @@ class UserType extends AbstractType
                 TextType::class,
                 [
                     'label' => "Nom d'utilisateur",
-                    'attr'  => ['class' => 'form-control border border-primary-subtle'],
+                    'attr'  => ['class' => 'form-control'],
                 ]
             )
             ->add(
