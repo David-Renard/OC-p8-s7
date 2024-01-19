@@ -2,7 +2,7 @@
 
 {% block header_img %}<img class="slide-image" src="{{ asset('img/todolist_content.jpg') }}" alt="todo list">{% endblock %}
 
-{% block title %}<h1>Liste des utilisateurs</h1>{% endblock %}
+{% block title %}Liste des utilisateurs{% endblock %}
 
 {% block body %}
     {% if users|length == 0 %}
@@ -11,12 +11,13 @@
         </div>
     {% else %}
         <div class="row">
-            <table class="table">
+            <table class="table text-center">
                 <thead>
                 <tr>
                     <th>#</th>
                     <th>Nom d'utilisateur</th>
                     <th>Adresse d'utilisateur</th>
+                    <th>Rôle actuel</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -26,8 +27,10 @@
                         <th scope="row">{{ loop.index }}</th>
                         <td>{{ user.username }}</td>
                         <td>{{ user.email }}</td>
+                        <td>{{ 'ROLE_ADMIN' in user.roles ? 'ADMIN' : 'USER' }}</td>
                         <td>
-{#                            <a href="{{ path('user_edit', {'id' : user.id}) }}" class="btn btn-success btn-sm">Edit</a>#}
+                            <a href="{{ path('admin_user_edit', {'id' : user.id}) }}" class="btn btn-success btn-sm">Modifier</a>
+                            <a href="{{ path('admin_user_delete', {'id' : user.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>
                         </td>
                     </tr>
                 {% endfor %}

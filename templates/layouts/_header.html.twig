@@ -19,8 +19,7 @@
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-person-lines-fill fs-4"></i></a>
-{#                    <a class="nav-link" href="{{ path('edit_profile') }}" class="dropdown-item"><i class="bi bi-person-lines-fill fs-4"></i></a>#}
+                    <a class="nav-link" href="{{ path('user_edit', {'id' : app.user.id}) }}" title="modifier mon profil"><i class="bi bi-person-lines-fill fs-4"></i></a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ path('task_create') }}" class="nav-link" title="créer une tâche"><i class="bi bi-clipboard-plus fs-4"></i></a>

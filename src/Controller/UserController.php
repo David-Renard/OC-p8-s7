@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\UserEditType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -55,4 +56,35 @@ class UserController extends AbstractController
 
         return $this->render('user/create.html.twig', ['form' => $form->createView(),]);
     }
+
+    #[Route('/edit/{id}', name: 'edit', requirements: ['id' => '\d+'])]
+    public function editProfileAction(User $user, Request $request): Response
+    {
+        if (!$this->getUser()) return $this->redirectToRoute('homepage');
+
+        $this->denyAccessUnlessGranted('USER_EDIT', $user);
+
+        $form = $this->createForm(UserEditType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $plainPassword = $form->get('plainPassword')->getData();
+            $user->setPassword($this->passwordHasher->hashPassword($user, $plainPassword));
+
+            $user->eraseCredentials();
+            $this->manager->flush($user);
+
+            $this->addFlash("success", "Votre compte a bien été modifié!");
+
+            return $this->redirectToRoute("task_list");
+        }
+
+        return $this->render('user/edit.html.twig', [
+            'form' => $form->createView(),
+            'user' => $user,
+        ]);
+
+    }
+
 }

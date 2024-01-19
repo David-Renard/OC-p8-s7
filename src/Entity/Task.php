@@ -19,7 +19,7 @@ class Task
     #[Assert\NotBlank(message: "Veuillez renseigner le titre de votre tâche.")]
     #[Assert\Length(
         min: 6,
-        max: 50,
+        max: 100,
         minMessage: "Le nom de votre tâche doit avoir au moins {{ limit }} caractères.",
         maxMessage: "Le nom de votre tâche doit avoir au plus {{ limit }} caractères.",
     )]
