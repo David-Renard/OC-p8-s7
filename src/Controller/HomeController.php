@@ -8,9 +8,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
+
+
     #[Route('/', name:'homepage')]
     public function homepage(): Response
     {
         return $this->render('home/index.html.twig');
     }
+
 }

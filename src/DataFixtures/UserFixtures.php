@@ -15,6 +15,7 @@ class UserFixtures extends Fixture
     {
     }
 
+
     public function load(ObjectManager $manager): void
     {
         $usersArray = [
@@ -173,13 +174,7 @@ class UserFixtures extends Fixture
             $manager->persist($user);
         }
 
-//        $anonymous = new User();
-//        $anonymous->setUsername('anonymous');
-//        $anonymous->setEmail('nomail@fake.com');
-//        $anonymous->setPassword($this->passwordHasher->hashPassword($anonymous, 'password'));
-//        $this->addReference("anonymous", $anonymous);
-//        $manager->persist($anonymous);
-
         $manager->flush();
+
     }
 }

@@ -24,14 +24,22 @@ class UserAdminController extends AbstractController
         private readonly UserRepository $userRepository,
         private readonly TaskRepository $taskRepository,
         private readonly EntityManagerInterface $manager,
-    ) {}
+    )
+    {
+    }
 
+
+    /**
+     * allow an admin to see all anonymous tasks (done or not)
+     * @return Response
+     */
     #[Route('/', name: 'list')]
     public function indexAnonymousTasksAction(): Response
     {
         $users = $this->userRepository->findAll();
 
         return $this->render('admin/user/index.html.twig', ['users' => $users]);
+
     }
 
     #[Route('/delete/{id}', name: 'delete', requirements: ['id' => '\d+'])]
@@ -45,6 +53,7 @@ class UserAdminController extends AbstractController
         $this->addFlash("success", "L'utilisateur a bien été supprimé.");
 
         return $this->redirectToRoute('admin_user_list');
+
     }
 
     #[Route('/edit/{id}', name: 'edit', requirements:  ['id' => '\d+'])]
@@ -63,12 +72,21 @@ class UserAdminController extends AbstractController
             return $this->redirectToRoute('admin_user_list');
         }
 
-        return $this->render('admin/user/edit.html.twig', [
-            'form' => $form->createView(),
-            'user' => $user,
-        ]);
+        return $this->render(
+                                'admin/user/edit.html.twig',
+                                [
+                                    'form' => $form->createView(),
+                                    'user' => $user,
+                                ]
+                            );
+
     }
 
+    /**
+     * private function used to anonymise all tasks from a user when deleted
+     * @param $user
+     * @return void
+     */
     private function anonymiseTasks($user): void
     {
         $tasks = $this->taskRepository->findBy(['author' => $user,]);
@@ -77,5 +95,6 @@ class UserAdminController extends AbstractController
             $task->setAuthor(null);
         }
         $this->manager->flush();
+
     }
 }
