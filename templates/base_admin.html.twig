@@ -19,8 +19,6 @@
         <!-- Page Content -->
         <div class="container">
             <div class="row my-3">
-{#                <a href="{{ path('user_create') }}" class="btn btn-primary">Créer un utilisateur</a>#}
-
                 {% if app.user %}
                     <a href="{{ path('app_logout') }}" class="pull-right btn btn-danger mb-2">Se déconnecter</a>
                     <a href="{{ path('admin_task_list') }}" class="pull-right btn btn-primary mb-2">Administration des tâches anonymes</a>
@@ -42,7 +40,6 @@
                         </div>
                     {% endfor %}
 
-                    {% block header_img %}<img class="slide-image" src="{{ asset('img/todolist_homepage.jpg') }}" alt="todo list">{% endblock %}
                 </div>
             </div>
 
