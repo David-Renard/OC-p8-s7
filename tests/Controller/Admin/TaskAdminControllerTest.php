@@ -2,9 +2,14 @@
 
 namespace App\Tests\Controller\Admin;
 
-use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class TaskAdminControllerTest extends TestCase
+class TaskAdminControllerTest extends WebTestCase
 {
+    public function testIndexAnonymousTaskOpen(): void
+    {
+        $client = static::createClient();
 
+
+    }
 }
