@@ -35,7 +35,7 @@ class UserTest extends TestCase
     public function testRolesAdmin(): void
     {
         $this->user->setRoles(['ROLE_ADMIN']);
-        $this->assertSame(['ROLE_ADMIN','ROLE_USER'], $this->user->getRoles());
+        $this->assertSame(['ROLE_ADMIN', 'ROLE_USER'], $this->user->getRoles());
     }
 
     public function testPassword(): void

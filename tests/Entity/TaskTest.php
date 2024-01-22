@@ -8,9 +8,11 @@ use PHPUnit\Framework\TestCase;
 
 class TaskTest extends TestCase
 {
+
     private Task $task;
 
     private \DateTimeImmutable $createdAt;
+
     public function setUp(): void
     {
         $this->task = new Task();
@@ -57,4 +59,5 @@ class TaskTest extends TestCase
         $this->task->setAuthor(null);
         $this->assertNull($this->task->getAuthor());
     }
+
 }
