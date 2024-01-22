@@ -15,9 +15,10 @@ class UsersFixtures extends Fixture
     {
     }
 
+
     public function load(ObjectManager $manager): void
     {
-        // Admin
+        // Admin.
         $user1 = new User();
         $user1->setUsername('user1')
             ->setEmail('user1@test.com')
@@ -26,7 +27,7 @@ class UsersFixtures extends Fixture
         $this->addReference('user1', $user1);
         $manager->persist($user1);
 
-        // User with tasks
+        // User with tasks.
         $user2 = new User();
         $user2->setUsername('user2')
             ->setEmail('user2@test.com')
@@ -34,7 +35,7 @@ class UsersFixtures extends Fixture
         $this->addReference('user2', $user2);
         $manager->persist($user2);
 
-        // User with no tasks
+        // User with no tasks.
         $user3 = new User();
         $user3->setUsername('user3')
             ->setEmail('user3@test.com')
@@ -43,5 +44,7 @@ class UsersFixtures extends Fixture
         $manager->persist($user3);
 
         $manager->flush();
+
     }
+
 }

@@ -20,6 +20,7 @@
         <div class="container">
             <div class="row my-3">
                 {% if app.user %}
+                    <p class="h6 text-end">Bonjour {{ app.user.username }}</p>
                     <a href="{{ path('app_logout') }}" class="pull-right btn btn-danger mb-2">Se déconnecter</a>
                     <a href="{{ path('admin_task_list') }}" class="pull-right btn btn-primary mb-2">Administration des tâches anonymes</a>
                     <a href="{{ path('admin_user_list') }}" class="pull-right btn btn-secondary">Administration des utilisateurs</a>

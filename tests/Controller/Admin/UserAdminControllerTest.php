@@ -1,10 +1,10 @@
 <?php
-
-namespace App\Tests\Controller\Admin;
-
-use PHPUnit\Framework\TestCase;
-
-class UserAdminControllerTest extends TestCase
-{
-
-}
+//
+//namespace App\Tests\Controller\Admin;
+//
+//use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+//
+//class UserAdminControllerTest extends WebTestCase
+//{
+//
+//}
