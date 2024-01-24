@@ -56,7 +56,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * The logged user can change whatever he wants on hiw own profile only
+     * The logged user can change whatever he wants except roles on hiw own profile only
      * @param User $user
      * @param Request $request
      * @return Response

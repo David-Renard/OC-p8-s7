@@ -2,26 +2,23 @@
 //
 //namespace App\Tests\Controller\Admin;
 //
-//use App\Repository\UserRepository;
-//use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+//use App\Tests\Controller\AbstractTestController;
 //
-//class TaskAdminControllerTest extends WebTestCase
+//class TaskAdminControllerTest extends AbstractTestController
 //{
-//    public function testIndexAnonymousTaskOpen(): void
+//    public function testAdminAnonymousTasks(): void
 //    {
-//        $client = static::createClient();
-//        $userRepository = static::getContainer()->get(UserRepository::class);
-////        dd($userRepository->findOneBy(['email' => 'user1@test.com']));
+//        $this->loggedAsAdmin();
 //
-//        // retrieve the test user
-//        $testUser = $userRepository->findOneBy(['email' => 'user1@test.com']);
-//
-//        // simulate $testUser being logged in
-//        $client->loginUser($testUser);
-//
-//        $client->request('GET', '/admin/task');
-//        $this->assertResponseIsSuccessful();
-//        $this->assertSelectorTextContains('h1', 'tâches anonymes');
+//        $this->client->request('GET', '/admin/task');
+//        $this->assertSelectorTextContains('h1', "Voici l'ensemble des tâches anonymes");
 //    }
 //
+//    public function testUserAnonymousTasks(): void
+//    {
+//        $this->loggedAsUser();
+//
+//        $this->client->request('GET', '/admin/task');
+//        $this->assertResponseStatusCodeSame(403);
+//    }
 //}

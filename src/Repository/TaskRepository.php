@@ -7,6 +7,7 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\SecurityBundle\Security;
 
 /**
  * @extends ServiceEntityRepository<Task>
@@ -21,29 +22,39 @@ class TaskRepository extends ServiceEntityRepository
 
     private const LIMIT = 5;
 
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private Security $security)
     {
         parent::__construct($registry, Task::class);
     }
 
-    public function findTasks(int $page, bool $isDone, int $id): array
+    public function findTasks(int $page, bool $isDone): array
     {
         $tasks = [];
+        $user = $this->security->getUser();
+
         if ($page < 1) $page = 1;
 
-        $query = $this->createQueryBuilder('t')
-            ->andWhere("t.isDone = :status")
-            ->andWhere("t.author = :id_author")
-            ->setParameter('status', $isDone)
-            ->setParameter('id_author', $id)
-            ->orderBy('t.createdAt', 'DESC')
-            ->setFirstResult(($page - 1) * self::LIMIT)
-            ->setMaxResults(self::LIMIT)
-            ->getQuery()
-        ;
+        $data = [];
+        if ($user) {
+            $query = $this->createQueryBuilder('t')
+                ->andWhere("t.isDone = :status")
+                ->setParameter('status', $isDone);
+            if (in_array(User::ROLE_ADMIN, $user->getRoles())) {
+                $query->andWhere("t.author IS NULL or t.author = :id_author");
+            } elseif (in_array(User::ROLE_USER, $user->getRoles())) {
+                $query->andWhere("t.author = :id_author");
+            }
+            $query
+                ->setParameter('id_author', $user)
+                ->orderBy('t.createdAt', 'DESC')
+                ->setFirstResult(($page - 1) * self::LIMIT)
+                ->setMaxResults(self::LIMIT)
+                ->getQuery()
+            ;
+            $paginator = new Paginator($query);
+            $data      = $paginator->getQuery()->getResult();
+        }
 
-        $paginator = new Paginator($query);
-        $data      = $paginator->getQuery()->getResult();
 
         if (empty($data)) {
             return $tasks;
@@ -56,21 +67,21 @@ class TaskRepository extends ServiceEntityRepository
         // Set comments array
         $tasks['pages'] = $pages;
         $tasks['page']  = $page;
-        $tasks['data'] = $data;
+        $tasks['data']  = $data;
         return $tasks;
     }
 
-    public function findAnonymousTasks(bool $isDone): array
-    {
-        $query = $this->createQueryBuilder('t')
-            ->andWhere("t.isDone = :status")
-            ->andWhere("t.author IS NULL")
-            ->setParameter('status', $isDone)
-            ->getQuery()
-        ;
-
-        return $query->getResult();
-    }
+//    public function findAnonymousTasks(bool $isDone): array
+//    {
+//        $query = $this->createQueryBuilder('t')
+//            ->andWhere("t.isDone = :status")
+//            ->andWhere("t.author IS NULL")
+//            ->setParameter('status', $isDone)
+//            ->getQuery()
+//        ;
+//
+//        return $query->getResult();
+//    }
 
 //    public function findOneBySomeField($value): ?Task
 //    {

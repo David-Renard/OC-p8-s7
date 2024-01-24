@@ -27,6 +27,11 @@
         <include>
             <directory suffix=".php">src</directory>
         </include>
+
+<!--        //exclure-->
+<!--        <include>-->
+<!--            <directory suffix=".php">src</directory>-->
+<!--        </include>-->
     </coverage>
 
     <listeners>
@@ -34,5 +39,6 @@
     </listeners>
 
     <extensions>
+        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
     </extensions>
 </phpunit>

@@ -28,20 +28,6 @@ class UserEditType extends AbstractType
                 ]
             )
             ->add(
-                'roles',
-                ChoiceType::class,
-                [
-                    'label'   => "Rôle de l'utilisateur",
-                    'choices' => [
-                        'ROLE_USER'  => 'ROLE_USER',
-                        'ROLE_ADMIN' => 'ROLE_ADMIN',
-                    ],
-                    'attr'  => ['class' => 'd-flex flex-column form-control'],
-                    'multiple' => true,
-                    'expanded' => true,
-                ]
-            )
-            ->add(
                 'plainPassword',
                 RepeatedType::class,
                 [

@@ -7,6 +7,7 @@ use App\Form\TaskType;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,7 +18,11 @@ class TaskController extends AbstractController
 {
 
 
-    public function __construct(private readonly TaskRepository $taskRepository, private readonly EntityManagerInterface $manager)
+    public function __construct(
+        private readonly TaskRepository $taskRepository,
+        private readonly EntityManagerInterface $manager,
+        private readonly Security $security,
+    )
     {
     }
 
@@ -27,12 +32,14 @@ class TaskController extends AbstractController
      * @param int|null $page
      * @return Response
      */
-    #[Route('/{page}', name: 'list', requirements: ['page' => '\d+'])]
+    #[Route('/p/{page}', name: 'list', requirements: ['page' => '\d+'])]
     public function listUncheckedTask(?int $page = 1): Response
     {
         $tasks = $this->getTasksByState($page, false);
 
-        if ($tasks === null) return $this->redirectToRoute('app_login');
+        if (!$this->security->getUser()) return $this->redirectToRoute('app_login');
+
+        if ($tasks === []) return $this->redirectToRoute('task_list');
 
         return $this->render('task/opened.html.twig', ['tasks' => $tasks,]);
 
@@ -44,12 +51,14 @@ class TaskController extends AbstractController
      * @param int|null $page
      * @return Response
      */
-    #[Route('/closed/{page}', name: 'closed', requirements: ['page' => '\d+'])]
+    #[Route('/closed/p/{page}', name: 'closed', requirements: ['page' => '\d+'])]
     public function listCheckedTask(?int $page = 1): Response
     {
-        $tasks = $this->getTasksByState($page, true);
+        $tasks = $this->getTasksByState($page, false);
 
-        if ($tasks === null) return $this->redirectToRoute('app_login');
+        if (!$this->security->getUser()) return $this->redirectToRoute('app_login');
+
+        if ($tasks === []) return $this->redirectToRoute('task_closed');
 
         return $this->render('task/closed.html.twig', ['tasks' => $tasks,]);
 
@@ -100,6 +109,9 @@ class TaskController extends AbstractController
             $this->manager->flush();
             $this->addFlash("success", "La tâche a bien été modifiée.");
 
+            if ($task->isIsDone()) {
+                return $this->redirectToRoute('task_closed');
+            }
             return $this->redirectToRoute('task_list');
         }
 
@@ -140,11 +152,6 @@ class TaskController extends AbstractController
 
     private function getTasksByState(int $page, bool $isDone): array|null
     {
-        $author = $this->getUser();
-
-        if ($author === null) return null;
-
-        return $this->taskRepository->findTasks($page, $isDone, $author->getId());
-
+        return $this->taskRepository->findTasks($page, $isDone);
     }
 }

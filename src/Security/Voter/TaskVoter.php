@@ -46,8 +46,7 @@ class TaskVoter extends Voter
     private function canEdit(TokenInterface $token, Task $task): Bool {
         $user = $token->getUser();
 
-        return (in_array('ROLE_ADMIN', $user->getRoles()) && $task->getAuthor() === null) ||
-            $user === $task->getAuthor();
+        return $user === $task->getAuthor();
     }
 
     private function canDelete(TokenInterface $token, Task $task): Bool {

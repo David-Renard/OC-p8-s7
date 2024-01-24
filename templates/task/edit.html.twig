@@ -17,7 +17,11 @@
             <button type="submit" class="btn btn-primary">Modifier</button>
         </div>
         {{ form_end(form) }}
-        <a href="{{ path('task_list') }}" class="btn btn-secondary">Retour à la liste de mes tâches</a>
+        {% if task.isDone == false %}
+            <a href="{{ path('task_list') }}" class="btn btn-secondary">Retour à la liste de mes tâches</a>
+        {% else %}
+            <a href="{{ path('task_closed') }}" class="btn btn-secondary">Retour à la liste de mes tâches</a>
+        {% endif %}
     </div>
 
 {% endblock %}

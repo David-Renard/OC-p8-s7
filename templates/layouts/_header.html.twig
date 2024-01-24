@@ -29,7 +29,7 @@
                 </li>
                 {% if is_granted('ROLE_ADMIN') == true %}
                     <li class="nav-item">
-                        <a class="nav-link" href=" {{ path('admin_task_list') }}" title="administration"><i class="bi bi-award-fill fs-4"></i></a>
+                        <a class="nav-link" href=" {{ path('admin_user_list') }}" title="administration"><i class="bi bi-award-fill fs-4"></i></a>
                     </li>
                 {% endif %}
             {% endif %}
