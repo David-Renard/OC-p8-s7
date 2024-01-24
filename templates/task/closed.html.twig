@@ -16,7 +16,11 @@
                                 <h4 class="pull-right">
                                     {% if task.isDone %}<span class="glyphicon glyphicon-ok"></span>{% else %}<span class="glyphicon glyphicon-remove"></span>{% endif %}
                                 </h4>
-                                <h4><a href="{{ path('task_edit', {id : task.id }) }}">{{ task.title }}</a></h4>
+                                {% if task.author == null %}
+                                    <h4>{{ task.title }}<span class="ms-3 h5 fst-italic badge bg-secondary">Auteur anonyme</span></h4>
+                                {% else %}
+                                    <h4><a href="{{ path('task_edit', {id : task.id }) }}">{{ task.title }}</a></h4>
+                                {% endif %}
                                 <p class="fst-italic fw-normal h6">le {{ task.createdAt|date("d/m/Y \\à H\\hi", 'Europe/Paris') }}</p>
                                 <p>{{ task.content }}</p>
                             </div>

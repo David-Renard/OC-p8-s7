@@ -35,7 +35,7 @@ class UsersFixtures extends Fixture
         $this->addReference('user2', $user2);
         $manager->persist($user2);
 
-        // User with no tasks.
+        // User with no task.
         $user3 = new User();
         $user3->setUsername('user3')
             ->setEmail('user3@test.com')
