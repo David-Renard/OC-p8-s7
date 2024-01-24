@@ -34,7 +34,7 @@ class UserAdminController extends AbstractController
      * @return Response
      */
     #[Route('/', name: 'list')]
-    public function indexAnonymousTasksAction(): Response
+    public function indexAdminUsersAction(): Response
     {
         $users = $this->userRepository->findAll();
 
