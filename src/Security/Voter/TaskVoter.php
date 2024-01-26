@@ -3,6 +3,7 @@
 namespace App\Security\Voter;
 
 use App\Entity\Task;
+use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -52,7 +53,7 @@ class TaskVoter extends Voter
     private function canDelete(TokenInterface $token, Task $task): Bool {
         $user = $token->getUser();
 
-        return (in_array('ROLE_ADMIN', $user->getRoles()) && $task->getAuthor() === null) ||
+        return (in_array(User::ROLE_ADMIN, $user->getRoles()) && $task->getAuthor() === null) ||
             $user === $task->getAuthor();
     }
 }
