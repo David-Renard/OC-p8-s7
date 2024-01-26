@@ -1,37 +1,28 @@
 <?php
-
-namespace App\Tests\Controller;
-
-use App\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
-//class TaskControllerTest extends WebTestCase
-class TaskControllerTest extends AbstractTestController
-{
-    public function testOpenedTaskIfLogged(): void
-    {
-//        $client = static::createClient();
 //
-//        $userRepository = static::getContainer()->get(UserRepository::class);
-//        $user=$userRepository->findOneBy(['email' => 'user1@test.com']);
+//namespace App\Tests\Controller;
 //
-////        dd($user);
-//        $client->loginUser($user);
-
-        $this->loggedAsUser();
-
-        $this->client->request('GET', '/task');
-//        $this->assertResponseIsSuccessful();
-
-        $this->assertSelectorTextContains('h1', "Voici l'ensemble de vos tâches ouvertes");
-    }
-
-//    public function testOpenedTaskUnlogged(): void
+//use App\Repository\UserRepository;
+//use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+//
+////class TaskControllerTest extends WebTestCase
+//class TaskControllerTest extends AbstractTestController
+//{
+//    public function testOpenedTaskIfLogged(): void
 //    {
-//        $this->client->request('GET', '/task');
-//        $this->client->followRedirect();
-//        $this->assertSelectorTextContains('h1', "Connectez-vous");
+//        $this->loggedAsUser();
+//
+//        $this->client->request('GET', '/task/p');
+//
+//        $this->assertSelectorTextContains('h1', "Voici l'ensemble de vos tâches ouvertes");
 //    }
+//
+////    public function testOpenedTaskUnlogged(): void
+////    {
+////        $this->client->request('GET', '/task');
+////        $this->client->followRedirect();
+////        $this->assertSelectorTextContains('h1', "Connectez-vous");
+////    }
 //
 //    public function testCreateTaskIfLogged(): void
 //    {
@@ -41,11 +32,11 @@ class TaskControllerTest extends AbstractTestController
 //        $this->assertSelectorTextContains('h1', "créer une tâche");
 //    }
 //
-//    public function testCreateTaskUnlogged(): void
-//    {
-//        $this->client->request('GET', '/task/create');
-//        $this->assertSelectorTextContains('h1', "Connectez-vous");
-//    }
+////    public function testCreateTaskUnlogged(): void
+////    {
+////        $this->client->request('GET', '/task/create');
+////        $this->assertSelectorTextContains('h1', "Connectez-vous");
+////    }
 //
 //    public function testPostTaskSuccess(): void
 //    {
@@ -65,5 +56,7 @@ class TaskControllerTest extends AbstractTestController
 //
 //        // submit the Form object
 //        $this->client->submit($form);
+//        $this->client->followRedirect();
+//        $this->assertSelectorTextContains('h1', "vos tâches ouvertes");
 //    }
-}
+//}

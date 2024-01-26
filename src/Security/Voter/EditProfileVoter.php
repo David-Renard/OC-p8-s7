@@ -44,7 +44,7 @@ class EditProfileVoter extends Voter
     private function canEditRoles(TokenInterface $token): Bool {
         $loggedUser = $token->getUser();
 
-        return in_array('ROLE_ADMIN', $loggedUser->getRoles());
+        return in_array(User::ROLE_ADMIN, $loggedUser->getRoles());
     }
 
     private function canEditUser(TokenInterface $token, User $user): Bool {
