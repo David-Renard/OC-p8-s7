@@ -33,5 +33,9 @@ yarn-error.log
 
 ###>  documentation not finalized ###
 /documentation/DOCUMENTATION_TECHNIQUE.docx
+#/documentation/AUDIT_QUALITE.docx
 ###<  documentation not finalized ###
 
+###>  blackfire not set in ###
+blackfire.msi
+###<  blackfire not set in ###
