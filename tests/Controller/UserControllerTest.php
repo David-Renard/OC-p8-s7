@@ -2,7 +2,6 @@
 
 namespace App\Tests\Controller;
 
-
 use App\Entity\User;
 use App\Repository\UserRepository;
 
@@ -35,23 +34,20 @@ class UserControllerTest extends AbstractTestController
 
         $form = $buttonCrawlerNode->form();
         $form['user[username]']               = 'test user';
-        $form['user[email]']                  = 'test-user2@test.com';
+        $form['user[email]']                  = 'toto-wowo@test.com';
         $form['user[plainPassword][first]']   = "maisonpoubelle";
         $form['user[plainPassword][second]']  = "maisonpoubelle";
         $form['user[roles][1]']->tick();
         $form['user[agreeTerms]']->tick();
 
-        $testUser = new User();
-        $testUser->setUsername($form->get('user[username]')->getValue());
-        $testUser->setEmail($form->get('user[email]')->getValue());
-        $testUser->setPassword($form->get('user[plainPassword][first]')->getValue());
-
         $this->client->submit($form);
 
-        $userRepository = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository(User::class);
-        $testUser = $userRepository->findBy(['email' => $testUser->getEmail()]);
+        $userRepository = $this->client->getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findBy(['email' => 'toto-wowo@test.com']);
 
+        $this->assertResponseRedirects('/login');
         $this->client->followRedirect();
+        $this->assertSelectorTextContains('h1', 'Connectez-vous pour accéder à votre espace!');
         $this->assertCount(1, $testUser);
 
     }
