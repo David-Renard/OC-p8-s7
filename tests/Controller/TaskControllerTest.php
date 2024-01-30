@@ -2,7 +2,7 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\Task;
+use App\Repository\TaskRepository;
 
 class TaskControllerTest extends AbstractTestController
 {
@@ -53,7 +53,7 @@ class TaskControllerTest extends AbstractTestController
     public function testUpdateAuthorTask(): void
     {
         $this->loggedAsUser();
-        $taskRepository = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository(Task::class);
+        $taskRepository = $this->client->getContainer()->get(TaskRepository::class);
         $validTask = $taskRepository->findOneBy(['title' => 'User task done']);
         $validTaskId = $validTask->getId();
 
@@ -71,14 +71,13 @@ class TaskControllerTest extends AbstractTestController
 
         $this->client->followRedirect();
         $this->assertSelectorTextContains("h1", "Voici l'ensemble de vos tâches");
-        // $this->assertEquals("Nouveau titre", $validTask->getTitle());
 
     }
 
     public function testUpdateNonAuthorTask(): void
     {
         $this->loggedAsUser();
-        $taskRepository = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository(Task::class);
+        $taskRepository = $this->client->getContainer()->get(TaskRepository::class);
         $validTask = $taskRepository->findOneBy(['title' => 'Admin task to do']);
         $validTaskId = $validTask->getId();
 
@@ -88,5 +87,45 @@ class TaskControllerTest extends AbstractTestController
 
     }
 
+    public function testDeleteTaskAnonymousAsAdmin(): void
+    {
+        $this->loggedAsAdmin();
+        $taskRepository = $this->client->getContainer()->get(TaskRepository::class);
+        $validTask = $taskRepository->findOneBy(['title' => 'Anonymous task done']);
+        $validTaskId = $validTask->getId();
+
+        $this->client->request('GET', "/task/delete/$validTaskId");
+
+        $this->client->followRedirect();
+        $this->assertSelectorTextContains('h1', "Voici l'ensemble");
+
+    }
+
+    public function testDeleteTaskAnonymousAsUser(): void
+    {
+        $this->loggedAsUser();
+        $taskRepository = $this->client->getContainer()->get(TaskRepository::class);
+        $validTask = $taskRepository->findOneBy(['title' => 'Anonymous task done']);
+        $validTaskId = $validTask->getId();
+
+        $this->client->request('GET', "/task/delete/$validTaskId");
+
+        $this->assertResponseStatusCodeSame(403);
+
+    }
+
+    public function testDeleteTaskAuthorAsAdmin(): void
+    {
+        $this->loggedAsAdmin();
+        $taskRepository = $this->client->getContainer()->get(TaskRepository::class);
+        $validTask = $taskRepository->findOneBy(['title' => 'Admin task to do']);
+        $validTaskId = $validTask->getId();
+
+        $this->client->request('GET', "/task/delete/$validTaskId");
+
+        $this->client->followRedirect();
+        $this->assertSelectorTextContains('h1', "Voici l'ensemble");
+
+    }
 
 }
