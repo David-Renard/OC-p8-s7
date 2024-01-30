@@ -54,7 +54,7 @@ class TaskController extends AbstractController
     #[Route('/closed/p/{page}', name: 'closed', requirements: ['page' => '\d+'])]
     public function listCheckedTask(?int $page = 1): Response
     {
-        $tasks = $this->getTasksByState($page, false);
+        $tasks = $this->getTasksByState($page, true);
 
         if (!$this->security->getUser()) return $this->redirectToRoute('app_login');
 
