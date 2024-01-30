@@ -3,11 +3,11 @@
 namespace App\Tests\Controller;
 
 use App\Entity\Task;
-use App\Repository\TaskRepository;
 
 class TaskControllerTest extends AbstractTestController
 {
-    private $invalidTaskId = 10000000;
+
+
     public function testOpenedTaskIfLogged(): void
     {
         $this->loggedAsUser();
@@ -15,14 +15,8 @@ class TaskControllerTest extends AbstractTestController
         $this->client->request('GET', '/task/p');
 
         $this->assertSelectorTextContains('h1', "Voici l'ensemble de vos tâches ouvertes");
-    }
 
-//    public function testOpenedTaskUnlogged(): void
-//    {
-//        $this->client->request('GET', '/task');
-//        $this->client->followRedirect();
-//        $this->assertSelectorTextContains('h1', "Connectez-vous");
-//    }
+    }
 
     public function testCreateTaskIfLogged(): void
     {
@@ -30,13 +24,8 @@ class TaskControllerTest extends AbstractTestController
 
         $this->client->request('GET', '/task/create');
         $this->assertSelectorTextContains('h1', "créer une tâche");
-    }
 
-//    public function testCreateTaskUnlogged(): void
-//    {
-//        $this->client->request('GET', '/task/create');
-//        $this->assertSelectorTextContains('h1', "Connectez-vous");
-//    }
+    }
 
     public function testPostTaskSuccess(): void
     {
@@ -58,6 +47,7 @@ class TaskControllerTest extends AbstractTestController
         $this->client->submit($form);
         $this->client->followRedirect();
         $this->assertSelectorTextContains('h1', "vos tâches ouvertes");
+
     }
 
     public function testUpdateAuthorTask(): void
@@ -81,7 +71,8 @@ class TaskControllerTest extends AbstractTestController
 
         $this->client->followRedirect();
         $this->assertSelectorTextContains("h1", "Voici l'ensemble de vos tâches");
-//        $this->assertEquals("Nouveau titre", $validTask->getTitle());
+        // $this->assertEquals("Nouveau titre", $validTask->getTitle());
+
     }
 
     public function testUpdateNonAuthorTask(): void
@@ -91,8 +82,11 @@ class TaskControllerTest extends AbstractTestController
         $validTask = $taskRepository->findOneBy(['title' => 'Admin task to do']);
         $validTaskId = $validTask->getId();
 
-        $crawler = $this->client->request('GET', "/task/update/$validTaskId");
+        $this->client->request('GET', "/task/update/$validTaskId");
 
         $this->assertResponseStatusCodeSame(403);
+
     }
+
+
 }

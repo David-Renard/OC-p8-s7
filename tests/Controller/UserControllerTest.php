@@ -5,14 +5,18 @@ namespace App\Tests\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+
 class UserControllerTest extends AbstractTestController
 {
+
+
     public function testLoginIfLogged(): void
     {
         $this->loggedAsUser();
         $this->client->request('GET', '/login');
         $this->client->followRedirect();
         $this->assertSelectorTextContains('h1', "Voici l'ensemble de vos tâches ouvertes");
+
     }
 
     public function testRegisterIfLogged(): void
@@ -21,6 +25,7 @@ class UserControllerTest extends AbstractTestController
         $this->client->request('GET', '/user/create');
         $this->client->followRedirect();
         $this->assertSelectorTextContains('h1', "Bienvenue sur Todo List");
+
     }
 
     public function testRegisterValid(): void
@@ -48,6 +53,7 @@ class UserControllerTest extends AbstractTestController
 
         $this->client->followRedirect();
         $this->assertCount(1, $testUser);
+
     }
 
     public function testEditOwnProfile(): void
@@ -73,6 +79,7 @@ class UserControllerTest extends AbstractTestController
         $this->client->followRedirect();
 
         $this->assertSelectorTextContains('h1', "tâches");
+
     }
 
     public function testEditOtherUserProfile(): void
@@ -84,15 +91,8 @@ class UserControllerTest extends AbstractTestController
 
         $this->client->request('GET', "/user/edit/$userId");
         $this->assertResponseStatusCodeSame(403);
+
     }
 
-//    public function testEditProfileUnlogged(): void
-//    {
-//        $userRepository = static::getContainer()->get(UserRepository::class);
-//        $userId = $userRepository->findOneBy(['email' => 'user2@test.com'])->getId();
-//        $this->client->request('GET', "/user/edit/$userId");
-//
-//        $this->client->followRedirect();
-//        $this->assertResponseRedirects('/login');
-//    }
+
 }

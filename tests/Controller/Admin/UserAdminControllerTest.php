@@ -10,12 +10,14 @@ class UserAdminControllerTest extends AbstractTestController
 
     private int $invalidUserId = 10000000;
 
+
     public function testAdminUsersUnlogged(): void
     {
         $this->client->request('GET', '/admin/user');
         $this->client->followRedirect();
 
         $this->assertSelectorTextContains('h1', 'Connectez-vous');
+
     }
 
     public function testAdminUsersAsUser(): void
@@ -24,15 +26,17 @@ class UserAdminControllerTest extends AbstractTestController
         $this->client->request('GET', '/admin/user');
 
         $this->assertResponseStatusCodeSame(403);
+
     }
 
-//    public function testAdminUsersAsAdmin(): void
-//    {
-//        $this->loggedAsAdmin();
-//        $this->client->request('GET', '/admin/user');
-//
-//        $this->assertSelectorTextContains('h1', "Liste des utilisateurs");
-//    }
+    public function testAdminUsersAsAdmin(): void
+    {
+        $this->loggedAsAdmin();
+        $this->client->request('GET', '/admin/user');
+
+        $this->client->followRedirect();
+        $this->assertSelectorTextContains('h1', "Liste des utilisateurs");
+    }
 
     public function testDeleteInvalidUser(): void
     {
@@ -40,6 +44,7 @@ class UserAdminControllerTest extends AbstractTestController
         $this->client->request('GET', "/admin/user/delete/.$this->invalidUserId");
 
         $this->assertResponseStatusCodeSame(404);
+
     }
 
     public function testDeleteValidUser(): void
@@ -51,6 +56,7 @@ class UserAdminControllerTest extends AbstractTestController
         $this->client->followRedirect();
 
         $this->assertSelectorTextContains('h1', 'Liste des utilisateurs');
+
     }
 
     public function testEditInvalidUser(): void
@@ -59,6 +65,7 @@ class UserAdminControllerTest extends AbstractTestController
         $this->client->request('GET', "/admin/user/edit/.$this->invalidUserId");
 
         $this->assertResponseStatusCodeSame(404);
+
     }
 
     public function testEditValidUser(): void
@@ -78,5 +85,8 @@ class UserAdminControllerTest extends AbstractTestController
 
         $this->client->followRedirect();
         $this->assertSelectorTextContains('h1', "Liste des utilisateurs");
+
     }
+
+
 }
