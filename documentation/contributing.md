@@ -13,12 +13,13 @@ __To make a pull request :__
 
 ### Process
 
-1. Please follow [README](../readme.md) come back right here
-2. Create a new branch on which you will work on following the rules
-3. Create issue(s)
-4. Write and run tests :
+1. Please follow [README](../readme.md) and then come back right here
+2. Create an issue
+3. Create a new branch on which you will work on following the rules
+4. Commit this branch
+5. Write and run tests :
 
-_Here is the process to instal and use PHP/Unit_
+_Here is the process to instal and use PHP/Unit : _
 * run `composer require --dev phpunit/phpunit ^9.6`
 * install __XDebug__ following this https://xdebug.org/docs/install (take care of installing zend_extension and coverage too)
 * create your test database by typing `symfony console doctrine:database:create --env=test`
@@ -28,5 +29,5 @@ _Here is the process to instal and use PHP/Unit_
 * to run test you can type in `vendor/bin/phpunit` or `vendor/bin/phpunit --coverage-html public/test-coverage` to get the coverage
 * if you reach at least 70% code coverage, you're all good
 
-5. Push the branch on your side
-6. Open a pull request on __this__ GitHub project
+6. Push the branch on your side
+7. Create a pull request on __this__ GitHub project

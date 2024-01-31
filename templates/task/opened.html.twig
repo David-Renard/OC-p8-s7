@@ -6,7 +6,7 @@
 
 {% block body %}
     <section class="container text-primary">
-        {% if tasks.data is defined %}
+        {% if tasks.pages > 0 %}
             <h1 class="my-5 text-center">Voici l'ensemble de vos tâches ouvertes : </h1>
             {% for task in tasks.data %}
             <div class="row border border-light shadow mb-3 rounded-2">
@@ -27,7 +27,7 @@
                         <div class="d-flex flex-row justify-content-around w-50 mx-auto mb-4">
                             <form action="{{ path('task_toggle', {'id' : task.id }) }}">
                                 <button class="btn btn-success btn-sm pull-right">
-                                    {% if not task.isDone %}Marquer comme faite{% else %}Marquer non terminée{% endif %}
+                                    Marquer comme faite
                                 </button>
                             </form>
                             <form action="{{ path('task_delete', {'id' : task.id }) }}">

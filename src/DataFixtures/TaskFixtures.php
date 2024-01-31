@@ -9,6 +9,8 @@ use Doctrine\Persistence\ObjectManager;
 
 class TaskFixtures extends Fixture implements DependentFixtureInterface
 {
+
+
     public function load(ObjectManager $manager): void
     {
         $lorem = [
@@ -116,4 +118,6 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
         return [UserFixtures::class];
 
     }
+
+
 }

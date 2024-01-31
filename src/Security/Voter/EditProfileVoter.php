@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class EditProfileVoter extends Voter
 {
+
     public const EDIT = 'USER_EDIT';
     public const ROLE = 'ROLE_EDIT';
 
@@ -18,6 +19,7 @@ class EditProfileVoter extends Voter
         // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, [self::EDIT, self::ROLE])
             && $subject instanceof User;
+
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
@@ -39,6 +41,7 @@ class EditProfileVoter extends Voter
         }
 
         return false;
+
     }
 
     private function canEditRoles(TokenInterface $token): Bool {
@@ -51,5 +54,8 @@ class EditProfileVoter extends Voter
         $loggedUser = $token->getUser();
 
         return $loggedUser === $user;
+
     }
+
+
 }
