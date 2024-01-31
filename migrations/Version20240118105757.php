@@ -20,16 +20,16 @@ final class Version20240118105757 extends AbstractMigration
 
     }
 
+
     public function up(Schema $schema): void
     {
-        // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE task ALTER author_id DROP NOT NULL');
 
     }
 
+
     public function down(Schema $schema): void
     {
-        // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SCHEMA public');
         $this->addSql('ALTER TABLE task ALTER author_id SET NOT NULL');
 
