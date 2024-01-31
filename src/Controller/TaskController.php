@@ -36,9 +36,13 @@ class TaskController extends AbstractController
     {
         $tasks = $this->getTasksByState($page, false);
 
-        if (!$this->security->getUser()) return $this->redirectToRoute('app_login');
+        if (!$this->security->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
 
-        if ($tasks['data'] === [] && $page > 1) return $this->redirectToRoute('task_list');
+        if ($tasks['data'] === [] && $page > 1) {
+            return $this->redirectToRoute('task_list');
+        }
 
         return $this->render('task/opened.html.twig', ['tasks' => $tasks]);
 
@@ -55,9 +59,13 @@ class TaskController extends AbstractController
     {
         $tasks = $this->getTasksByState($page, true);
 
-        if (!$this->security->getUser()) return $this->redirectToRoute('app_login');
+        if (!$this->security->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
 
-        if ($tasks['data'] === [] && $page > 1) return $this->redirectToRoute('task_closed');
+        if ($tasks['data'] === [] && $page > 1) {
+            return $this->redirectToRoute('task_closed');
+        }
 
         return $this->render('task/closed.html.twig', ['tasks' => $tasks]);
 
@@ -140,10 +148,21 @@ class TaskController extends AbstractController
     #[Route('/{id}/toggle', name: 'toggle', requirements: ['id' => '\d+'])]
     public function toggleTask(Task $task): Response
     {
-        $task->isIsDone() ? $task->setIsDone(false) : $task->setIsDone(true);
+        if ($task->isIsDone()) {
+            $task->setIsDone(false);
+        }
+        else {
+            $task->setIsDone(true);
+        }
 
         $this->manager->flush($task);
-        $task->isIsDone() ? $this->addFlash("success", sprintf("La tâche '%s' est désormais terminée.", $task->getTitle())) : $this->addFlash("success", sprintf("La tâche '%s' est désormais ouverte.", $task->getTitle()));
+
+        if ($task->isIsDone()) {
+            $this->addFlash("success", sprintf("La tâche '%s' est désormais terminée.", $task->getTitle()));
+        }
+        else {
+            $this->addFlash("success", sprintf("La tâche '%s' est désormais ouverte.", $task->getTitle()));
+        }
 
         return $this->redirectToRoute('task_list');
 

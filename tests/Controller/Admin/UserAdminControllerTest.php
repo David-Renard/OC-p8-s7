@@ -8,7 +8,7 @@ use App\Tests\Controller\AbstractTestController;
 class UserAdminControllerTest extends AbstractTestController
 {
 
-    private int $invalidUserId = 10000000;
+    private const INVALID_USER_ID = 10000000;
 
 
     public function testAdminUsersUnlogged(): void
@@ -41,7 +41,7 @@ class UserAdminControllerTest extends AbstractTestController
     public function testDeleteInvalidUser(): void
     {
         $this->loggedAsAdmin();
-        $this->client->request('GET', "/admin/user/delete/.$this->invalidUserId");
+        $this->client->request('GET', "/admin/user/delete/".self::INVALID_USER_ID);
 
         $this->assertResponseStatusCodeSame(404);
 
@@ -62,7 +62,7 @@ class UserAdminControllerTest extends AbstractTestController
     public function testEditInvalidUser(): void
     {
         $this->loggedAsAdmin();
-        $this->client->request('GET', "/admin/user/edit/.$this->invalidUserId");
+        $this->client->request('GET', "/admin/user/edit/".self::INVALID_USER_ID);
 
         $this->assertResponseStatusCodeSame(404);
 

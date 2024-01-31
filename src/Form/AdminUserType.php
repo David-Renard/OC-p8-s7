@@ -16,6 +16,8 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 
 class AdminUserType extends AbstractType
 {
+
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -23,15 +25,15 @@ class AdminUserType extends AbstractType
                 'roles',
                 ChoiceType::class,
                 [
-                    'label'   => "Rôle de l'utilisateur",
-                    'choices' =>
-                                [
-                                    'ROLE_USER'  => 'ROLE_USER',
-                                    'ROLE_ADMIN' => 'ROLE_ADMIN',
-                                ],
-                    'attr'  => ['class' => 'd-flex flex-column form-control'],
-                    'multiple' => true,
-                    'expanded' => true,
+                 'label'   => "Rôle de l'utilisateur",
+                 'choices' =>
+                             [
+                              'ROLE_USER'  => 'ROLE_USER',
+                              'ROLE_ADMIN' => 'ROLE_ADMIN',
+                             ],
+                 'attr'  => ['class' => 'd-flex flex-column form-control'],
+                 'multiple' => true,
+                 'expanded' => true,
                 ]
             )
         ;
@@ -40,7 +42,9 @@ class AdminUserType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => null,]);
+        $resolver->setDefaults(['data_class' => null]);
 
     }
+
+
 }

@@ -13,6 +13,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TaskType extends AbstractType
 {
+
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -20,23 +22,23 @@ class TaskType extends AbstractType
                 'title',
                 TextType::class,
                 [
-                    'label' => 'Titre',
-                    'attr'  => ['class' => 'form-control border border-primary-subtle'],
-                    'label_attr' => ['class' => 'mb-2'],
+                 'label' => 'Titre',
+                 'attr'  => ['class' => 'form-control border border-primary-subtle'],
+                 'label_attr' => ['class' => 'mb-2'],
                 ]
             )
             ->add(
                 'content',
                 TextareaType::class,
                 [
-                    'label'    => 'Description',
-                    'attr'     =>
-                        [
-                            'class' => 'form-control border border-primary-subtle',
-                            'rows'   => 4,
-                        ],
-                    'required' => false,
-                    'label_attr' => ['class' => 'mb-2'],
+                 'label'    => 'Description',
+                 'attr'     =>
+                     [
+                      'class' => 'form-control border border-primary-subtle',
+                      'rows'   => 4,
+                     ],
+                 'required' => false,
+                 'label_attr' => ['class' => 'mb-2'],
                 ]
             )
         ;
@@ -45,7 +47,9 @@ class TaskType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => Task::class,]);
+        $resolver->setDefaults(['data_class' => Task::class]);
 
     }
+
+
 }
