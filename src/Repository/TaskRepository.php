@@ -55,15 +55,11 @@ class TaskRepository extends ServiceEntityRepository
             $data      = $paginator->getQuery()->getResult();
         }
 
-
-        if (empty($data)) {
-            return $tasks;
-        }
-
         // Set nbPages
         $pages = ceil($paginator->count() / self::LIMIT);
 
         if ($page > $pages) $page = $pages;
+
         // Set comments array
         $tasks['pages'] = $pages;
         $tasks['page']  = $page;
@@ -71,25 +67,4 @@ class TaskRepository extends ServiceEntityRepository
         return $tasks;
     }
 
-//    public function findAnonymousTasks(bool $isDone): array
-//    {
-//        $query = $this->createQueryBuilder('t')
-//            ->andWhere("t.isDone = :status")
-//            ->andWhere("t.author IS NULL")
-//            ->setParameter('status', $isDone)
-//            ->getQuery()
-//        ;
-//
-//        return $query->getResult();
-//    }
-
-//    public function findOneBySomeField($value): ?Task
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

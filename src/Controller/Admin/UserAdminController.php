@@ -24,8 +24,7 @@ class UserAdminController extends AbstractController
         private readonly UserRepository $userRepository,
         private readonly TaskRepository $taskRepository,
         private readonly EntityManagerInterface $manager,
-    )
-    {
+    ) {
     }
 
 
@@ -89,7 +88,7 @@ class UserAdminController extends AbstractController
      */
     private function anonymiseTasks($user): void
     {
-        $tasks = $this->taskRepository->findBy(['author' => $user,]);
+        $tasks = $this->taskRepository->findBy(['author' => $user]);
 
         foreach ($tasks as $task) {
             $task->setAuthor(null);
@@ -97,4 +96,6 @@ class UserAdminController extends AbstractController
         $this->manager->flush();
 
     }
+
+
 }

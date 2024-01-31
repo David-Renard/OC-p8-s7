@@ -19,6 +19,7 @@ class TaskVoter extends Voter
         // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, [self::EDIT, self::DELETE])
             && $subject instanceof Task;
+
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
@@ -42,12 +43,14 @@ class TaskVoter extends Voter
         }
 
         return false;
+
     }
 
     private function canEdit(TokenInterface $token, Task $task): Bool {
         $user = $token->getUser();
 
         return $user === $task->getAuthor();
+
     }
 
     private function canDelete(TokenInterface $token, Task $task): Bool {
@@ -55,5 +58,8 @@ class TaskVoter extends Voter
 
         return (in_array(User::ROLE_ADMIN, $user->getRoles()) && $task->getAuthor() === null) ||
             $user === $task->getAuthor();
+
     }
+
+
 }

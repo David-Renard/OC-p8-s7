@@ -22,8 +22,7 @@ class TaskController extends AbstractController
         private readonly TaskRepository $taskRepository,
         private readonly EntityManagerInterface $manager,
         private readonly Security $security,
-    )
-    {
+    ) {
     }
 
 
@@ -39,9 +38,9 @@ class TaskController extends AbstractController
 
         if (!$this->security->getUser()) return $this->redirectToRoute('app_login');
 
-        if ($tasks === []) return $this->redirectToRoute('task_list');
+        if ($tasks['data'] === [] && $page > 1) return $this->redirectToRoute('task_list');
 
-        return $this->render('task/opened.html.twig', ['tasks' => $tasks,]);
+        return $this->render('task/opened.html.twig', ['tasks' => $tasks]);
 
     }
 
@@ -58,9 +57,9 @@ class TaskController extends AbstractController
 
         if (!$this->security->getUser()) return $this->redirectToRoute('app_login');
 
-        if ($tasks === []) return $this->redirectToRoute('task_closed');
+        if ($tasks['data'] === [] && $page > 1) return $this->redirectToRoute('task_closed');
 
-        return $this->render('task/closed.html.twig', ['tasks' => $tasks,]);
+        return $this->render('task/closed.html.twig', ['tasks' => $tasks]);
 
     }
 
@@ -153,5 +152,8 @@ class TaskController extends AbstractController
     private function getTasksByState(int $page, bool $isDone): array|null
     {
         return $this->taskRepository->findTasks($page, $isDone);
+
     }
+
+
 }

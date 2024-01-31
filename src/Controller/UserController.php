@@ -21,7 +21,8 @@ class UserController extends AbstractController
     public function __construct(
         private readonly UserPasswordHasherInterface $passwordHasher,
         private readonly EntityManagerInterface $manager,
-    ) {}
+    ) {
+    }
 
     #[Route('/create', name: 'create')]
     public function createAction(Request $request): Response
@@ -36,16 +37,15 @@ class UserController extends AbstractController
             $plainPassword = $form->get('plainPassword')->getData();
             $user->setPassword($this->passwordHasher->hashPassword($user, $plainPassword));
 
-//            $user->eraseCredentials();
             $this->manager->persist($user);
             $this->manager->flush();
 
             $this->addFlash("success", "Votre compte a bien été créé! Vous pouvez dès maintenant vous connecter.");
 
-            return $this->redirectToRoute("app_login", status: 302);
+            return $this->redirectToRoute("app_login");
         }
 
-        return $this->render('user/create.html.twig', ['form' => $form->createView(),]);
+        return $this->render('user/create.html.twig', ['form' => $form->createView()]);
     }
 
     /**
