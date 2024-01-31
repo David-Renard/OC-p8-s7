@@ -2,7 +2,10 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\Task;
+use App\Entity\User;
 use App\Repository\TaskRepository;
+use App\Repository\UserRepository;
 
 class TaskControllerTest extends AbstractTestController
 {
@@ -126,6 +129,19 @@ class TaskControllerTest extends AbstractTestController
         $this->client->followRedirect();
         $this->assertSelectorTextContains('h1', "Voici l'ensemble");
 
+    }
+
+    public function testGetTasks(): void
+    {
+        $userRepository = $this->client->getContainer()->get(UserRepository::class);
+        $user = $userRepository->findOneBy(['email' => 'user2@test.com']);
+        $tasks = $user->getTasks();
+        $tasksCount = count($tasks);
+
+        foreach ($tasks as $task) {
+            $this->assertInstanceOf(Task::class, $task);
+        }
+        $this->assertEquals(2, $tasksCount);
     }
 
 }
