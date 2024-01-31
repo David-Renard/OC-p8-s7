@@ -25,7 +25,7 @@ class TaskVoter extends Voter
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
-        // if the user is anonymous, do not grant access
+        // If the user is anonymous, do not grant access!
         if (!$user instanceof UserInterface) {
             return false;
         }
@@ -33,11 +33,9 @@ class TaskVoter extends Voter
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case self::EDIT:
-                // logic to determine if the user can EDIT
                 return $this->canEdit($token, $subject);
                 break;
             case self::DELETE:
-                // logic to determine if the user can VIEW
                 return $this->canDelete($token, $subject);
                 break;
         }
