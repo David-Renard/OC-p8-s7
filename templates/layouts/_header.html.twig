@@ -10,7 +10,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('homepage') }}" title="page d'accueil"><i class="bi bi-house-door fs-4"></i></a>
             </li>
-            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') == false %}
+            {% if is_granted('ROLE_USER') == false %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_login') }}" title="se connecter"><i class="bi bi-person-up fs-4"></i></a>
                 </li>
