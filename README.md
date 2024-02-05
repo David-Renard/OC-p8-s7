@@ -41,20 +41,27 @@ performance de l'application. Je dois également apporter un document technique 
 `DATABASE_URL="postgresql://postgres:root@127.0.0.1:5432/ToDos7?serverVersion=15&charset=utf8"`
 
 __ToDos7__ wille be the name of your database.
+
 3. Create the database by running : 
 
 `symfony console doctrine:database:create`
+
 4. Then you can migrate by running : 
 
 `symfony console doctrine:migrations:migrate`
+
 5. Load fixtures by running :
 
 `symfony console doctrine:fixtures:load`
+
 6. Your project should now be ready!
+
 7. You can use project after running symfony serve -d
+
 8. Here is a ROLE_USER account :
 * oceanebarb@hotmail.com
 * Ocean84-Barb
+
 9. Here is a ROLE_ADMIN account :
 * xavdu@hotmail.com
 * Xavier75+Dupon
