@@ -22,6 +22,7 @@ class UserController extends AbstractController
         private readonly UserPasswordHasherInterface $passwordHasher,
         private readonly EntityManagerInterface $manager,
     ) {
+
     }
 
     #[Route('/create', name: 'create')]
@@ -82,8 +83,8 @@ class UserController extends AbstractController
         return $this->render(
                                 'user/edit.html.twig',
                                 [
-                                    'form' => $form->createView(),
-                                    'user' => $user,
+                                 'form' => $form->createView(),
+                                 'user' => $user,
                                 ]
                             );
 

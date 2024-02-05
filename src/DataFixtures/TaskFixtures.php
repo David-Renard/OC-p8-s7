@@ -83,11 +83,12 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
 
         for ($element = 0; $element < 50; $element++) {
             $task = new Task();
-            $randTitleNb = rand(0, count($lorem) - 1);
+            $randTitleNb = rand(0, (count($lorem) - 1));
             $randContentCount = rand(0, 5);
             $content = "";
+
             for ($i = 0; $i < $randContentCount; $i++) {
-                $randContentNb = rand(0, count($lorem) - 1);
+                $randContentNb = rand(0, (count($lorem) - 1));
                 $content = $content.$lorem[$randContentNb].' ';
             }
 
@@ -113,6 +114,7 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
 
     }
 
+    
     public function getDependencies(): array
     {
         return [UserFixtures::class];

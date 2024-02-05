@@ -74,8 +74,8 @@ class UserAdminController extends AbstractController
         return $this->render(
                                 'admin/user/edit.html.twig',
                                 [
-                                    'form' => $form->createView(),
-                                    'user' => $user,
+                                 'form' => $form->createView(),
+                                 'user' => $user,
                                 ]
                             );
 
