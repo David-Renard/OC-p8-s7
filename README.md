@@ -35,6 +35,8 @@ performance de l'application. Je dois également apporter un document technique 
 
 > Install composer
 
+> Install npm
+
 1. Clone or download (or fork to contribute) this repository : https://github.com/David-Renard/OC-p8-s7.git
 2. Edit your own .env file into an .env.local file in wich you have to change the doctrine section and paste in :
 
@@ -54,14 +56,18 @@ __ToDos7__ wille be the name of your database.
 
 `symfony console doctrine:fixtures:load`
 
-6. Your project should now be ready!
+6. Build everything you need by typing in : 
 
-7. You can use project after running symfony serve -d
+`npm run build`
 
-8. Here is a ROLE_USER account :
+7. Your project should now be ready!
+
+8. You can use project after running `symfony serve -d`
+
+9. Here is a ROLE_USER account :
 * oceanebarb@hotmail.com
 * Ocean84-Barb
 
-9. Here is a ROLE_ADMIN account :
+10. Here is a ROLE_ADMIN account :
 * xavdu@hotmail.com
 * Xavier75+Dupon
