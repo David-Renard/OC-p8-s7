@@ -23,6 +23,7 @@ class TaskController extends AbstractController
         private readonly EntityManagerInterface $manager,
         private readonly Security $security,
     ) {
+
     }
 
 
@@ -71,6 +72,7 @@ class TaskController extends AbstractController
 
     }
 
+
     #[Route('/create', name: 'create')]
     #[IsGranted('ROLE_USER')]
     public function createTask(Request $request): Response
@@ -94,12 +96,13 @@ class TaskController extends AbstractController
         return $this->render(
                                 'task/create.html.twig',
                                 [
-                                    'task' => $task,
-                                    'form' => $form->createView(),
+                                 'task' => $task,
+                                 'form' => $form->createView(),
                                 ]
                             );
 
     }
+
 
     #[Route('/update/{id}', name: 'edit', requirements: ['id' => '\d+'])]
     public function updateTask(Task $task, Request $request): Response
@@ -119,18 +122,20 @@ class TaskController extends AbstractController
             if ($task->isIsDone()) {
                 return $this->redirectToRoute('task_closed');
             }
+
             return $this->redirectToRoute('task_list');
         }
 
         return $this->render(
                         'task/edit.html.twig',
                                 [
-                                    'task' => $task,
-                                    'form' => $form,
+                                 'task' => $task,
+                                 'form' => $form,
                                 ]
                             );
 
     }
+
 
     #[Route('/delete/{id}', name: 'delete', requirements: ['id' => '\d+'])]
     public function deleteTask(Task $task): Response
@@ -145,14 +150,14 @@ class TaskController extends AbstractController
 
     }
 
+
     #[Route('/{id}/toggle', name: 'toggle', requirements: ['id' => '\d+'])]
     public function toggleTask(Task $task): Response
     {
+        $task->setIsDone(true);
+
         if ($task->isIsDone()) {
             $task->setIsDone(false);
-        }
-        else {
-            $task->setIsDone(true);
         }
 
         $this->manager->flush($task);
@@ -167,6 +172,7 @@ class TaskController extends AbstractController
         return $this->redirectToRoute('task_list');
 
     }
+
 
     private function getTasksByState(int $page, bool $isDone): array|null
     {

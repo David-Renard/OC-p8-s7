@@ -39,75 +39,99 @@ class Task
     #[ORM\JoinColumn(nullable: true)]
     private ?User $author = null;
 
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->isDone = false;
+
     }
+
 
     public function getId(): ?int
     {
         return $this->id;
+
     }
+
 
     public function getTitle(): ?string
     {
         return $this->title;
+
     }
+
 
     public function setTitle(string $title): static
     {
         $this->title = $title;
 
         return $this;
+
     }
+
 
     public function getContent(): ?string
     {
         return $this->content;
+
     }
+
 
     public function setContent(?string $content): static
     {
         $this->content = $content;
 
         return $this;
+
     }
+
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
+
     }
+
 
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
 
         return $this;
+
     }
+
 
     public function isIsDone(): ?bool
     {
         return $this->isDone;
+
     }
+
 
     public function setIsDone(bool $isDone): static
     {
         $this->isDone = $isDone;
 
         return $this;
+
     }
+
 
     public function getAuthor(): ?User
     {
         return $this->author;
+
     }
+
 
     public function setAuthor(?User $author): static
     {
         $this->author = $author;
 
         return $this;
+
     }
 
 

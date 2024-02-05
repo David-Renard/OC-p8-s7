@@ -48,8 +48,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     #[Assert\PasswordStrength(
         [
-            "minScore" => Assert\PasswordStrength::STRENGTH_WEAK,
-            "message"  => "Votre mot de passe est trop simple. Pour votre sécurité, changez-le."
+         "minScore" => Assert\PasswordStrength::STRENGTH_WEAK,
+         "message"  => "Votre mot de passe est trop simple. Pour votre sécurité, changez-le."
         ]
     )]
     private string $plainPassword;
@@ -60,27 +60,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Task::class, orphanRemoval: true)]
     private Collection $tasks;
 
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
+
     }
+
 
     public function getId(): ?int
     {
         return $this->id;
+
     }
+
 
     public function getEmail(): ?string
     {
         return $this->email;
+
     }
+
 
     public function setEmail(string $email): static
     {
         $this->email = $email;
 
         return $this;
+
     }
+
 
     /**
      * A visual identifier that represents this user.
@@ -90,7 +99,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
+
     }
+
 
     /**
      * @see UserInterface
@@ -100,15 +111,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $roles = $this->roles;
         $roles[] = 'ROLE_USER';
 
+
         return array_unique($roles);
+
     }
+
 
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;
 
         return $this;
+
     }
+
 
     /**
      * @see PasswordAuthenticatedUserInterface
@@ -116,14 +132,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getPassword(): string
     {
         return $this->password;
+
     }
+
 
     public function setPassword(string $password): static
     {
         $this->password = $password;
 
         return $this;
+
     }
+
 
     public function getPlainPassword(): ?string
     {
@@ -131,11 +151,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     }
 
+
     public function setPlainPassword(?string $plainPassword): void
     {
         $this->plainPassword = $plainPassword;
 
     }
+
 
     /**
      * @see UserInterface
@@ -146,17 +168,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
+
     public function getUsername(): ?string
     {
         return $this->username;
+
     }
+
 
     public function setUsername(string $username): static
     {
         $this->username = $username;
 
         return $this;
+
     }
+
 
     /**
      * @return Collection<int, Task>
@@ -164,7 +191,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getTasks(): Collection
     {
         return $this->tasks;
+
     }
+
 
     public function addTask(Task $task): static
     {
@@ -174,7 +203,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+
     }
+
 
     public function removeTask(Task $task): static
     {
@@ -186,6 +217,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+
     }
 
 

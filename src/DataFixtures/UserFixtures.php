@@ -166,6 +166,7 @@ class UserFixtures extends Fixture
             $user->setUsername($usersArray[$element]['username']);
             $user->setEmail($usersArray[$element]['email']);
             $user->setPassword($this->passwordHasher->hashPassword($user, $usersArray[$element]['password']));
+
             if (rand(0, 6) === 0) {
                 $user->setRoles(['ROLE_ADMIN']);
             }
