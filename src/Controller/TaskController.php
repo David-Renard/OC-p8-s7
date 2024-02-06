@@ -88,7 +88,7 @@ class TaskController extends AbstractController
             $this->manager->persist($task);
             $this->manager->flush();
 
-            $this->addFlash("succes", "La tâche a bien été ajoutée.");
+            $this->addFlash("success", "La tâche a bien été ajoutée.");
 
             return $this->redirectToRoute('task_list');
         }
@@ -154,11 +154,9 @@ class TaskController extends AbstractController
     #[Route('/{id}/toggle', name: 'toggle', requirements: ['id' => '\d+'])]
     public function toggleTask(Task $task): Response
     {
-        $task->setIsDone(true);
-
         if ($task->isIsDone()) {
             $task->setIsDone(false);
-        }
+        } else $task->setIsDone(true);
 
         $this->manager->flush($task);
 
