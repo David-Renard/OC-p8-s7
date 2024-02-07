@@ -19,7 +19,7 @@ __To make a pull request :__
 4. Commit this branch
 5. Write and run tests :
 
-_Here is the process to instal and use PHP/Unit : _
+_Here is the process to install and use PHP/Unit :_
 * run `composer require --dev phpunit/phpunit ^9.6`
 * install __XDebug__ following this https://xdebug.org/docs/install (take care of installing zend_extension and coverage too)
 * create your test database by typing `symfony console doctrine:database:create --env=test`
